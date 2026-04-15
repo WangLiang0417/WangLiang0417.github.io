@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Git常用命令 | 魍魉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="No one is an island.">
+  
+  
+  
+    <link rel="alternate" href="../../../../../atom.xml" title="魍魉" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="../../../../../favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="../../../../../css/style.css">
+
+  
+    
+<link rel="stylesheet" href="../../../../../fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="../../../../../localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../../index.html" id="logo">魍魉</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../../index.html" id="subtitle">坏人</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="../../../../../."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="../../../../../archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="../../../../../about/"><i class="fa fa-user"></i> 关于</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-git/Git常用命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Git常用命令
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2026-03-06T08:05:50.000Z" itemprop="datePublished">2026年03月06日</time>
+</span>
+      
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Git常用命令</p>
+<span id="more"></span>
+<h3 id="Git常用命令流程图"><a href="#Git常用命令流程图" class="headerlink" title="Git常用命令流程图"></a>Git常用命令流程图</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">+---------+        fetch / clone        +-------------+</span><br><span class="line">| Remote  | --------------------------&gt; | Repository  |</span><br><span class="line">| (远程库) |  &lt;------------------------- | (本地库)     |</span><br><span class="line">+---------+           push              +-------------+</span><br><span class="line">     |                                   |      ^          </span><br><span class="line">     |                                   |      | commit   </span><br><span class="line">     |                                   |    +--------+   </span><br><span class="line">     |                          checkout |    | Index  |   </span><br><span class="line">     |                                   |    |(暂存区) |   </span><br><span class="line">     |                                   |    +--------+   </span><br><span class="line">     |                                   |      ^          </span><br><span class="line">     |                                   v      | add      </span><br><span class="line">     |                                  +------------+</span><br><span class="line">     |        pull(fetch + merge)       | workspace  |</span><br><span class="line">     +--------------------------------&gt; | (工作区)    |</span><br><span class="line">                                        +------------+</span><br></pre></td></tr></table></figure>
+<p>各区域含义：</p>
+<ul>
+<li>Remote（远程库）：GitHub&#x2F;GitLab&#x2F;服务器上的仓库。</li>
+<li>Repository（本地库）：.git目录；保存完整历史和分支。</li>
+<li>Index（暂存区&#x2F;staging area）：提交前的缓冲区。</li>
+<li>Workspace（工作区）：实际编辑的文件所在目录。</li>
+</ul>
+<p>了解git命令可以直接查看本地帮助信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">help</span> -a    <span class="comment"># 查看所有git命令帮助信息</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git &lt;<span class="built_in">command</span>&gt; --<span class="built_in">help</span>    <span class="comment"># 查看特定命令的详细信息</span></span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在当前目录(或新建project_name目录)下初始化git仓库</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git init [project_name]</span>  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">克隆git仓到本地</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> &lt;url&gt;</span>   </span><br></pre></td></tr></table></figure>
+
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看远端仓库信息（远端名+url）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote -v</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加远程仓库</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote add &lt;name&gt; &lt;url&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改对应远程仓库的地址</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote set-url &lt;name&gt; &lt;url&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改远程名</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote rename &lt;old_name&gt; &lt;new_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --list  <span class="comment"># 使用--show-origin参数可以查看配置的来源（系统级、全局级、仓库级）</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看特定配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config user.name</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看全局配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --global --list</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config &lt;key&gt; &lt;value&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --<span class="built_in">unset</span> &lt;key&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Git配置级别：<br>系统级 (–system)：<code>/etc/gitconfig</code>，所有用户生效<br>全局级 (–global)：<code>~/.gitconfig</code>，当前用户生效<br>仓库级 (–local)：<code>.git/config</code>，当前项目仓库生效，默认为local  </p>
+<p>配置优先级： local &gt; global &gt; system</p>
+</blockquote>
+<h3 id="增加、删除、修改或恢复文件"><a href="#增加、删除、修改或恢复文件" class="headerlink" title="增加、删除、修改或恢复文件"></a>增加、删除、修改或恢复文件</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加指定文件到暂存区</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加指定目录下所有文件到暂存区，包括子目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add &lt;<span class="built_in">dir</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加当前目录下所有文件到暂存区</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add .</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只删除暂存区文件，工作区会保留（即取消对文件的托管）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> --cached &lt;file&gt;</span>    </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">同时删除暂存区和工作区的文件，若文件在暂存区已有修改，需使用`-f`强制删除</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件夹下所有文件同时删除</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> -r &lt;<span class="built_in">dir</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重命名/移动文件或目录（等同 <span class="built_in">mv</span> + git add + git <span class="built_in">rm</span> 操作）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">mv</span> &lt;old&gt; &lt;new&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">丢弃未暂存的修改（即恢复到当前分支最近一次提交）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git restore &lt;file&gt;    <span class="comment"># 等同 git checkout -- &lt;file&gt;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从暂存区取消，工作区内容不变</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git restore --staged &lt;file&gt;    <span class="comment"># 等同 git reset &lt;file&gt;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从指定提交或分支恢复文件内容</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git restore --<span class="built_in">source</span>=&lt;commit|branch&gt; &lt;file&gt;    <span class="comment"># 等同 git checkout &lt;commit|branch&gt; -- &lt;file&gt;</span></span> </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="信息查询"><a href="#信息查询" class="headerlink" title="信息查询"></a>信息查询</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看git仓库当前状态（当前分支、已修改文件和已暂存文件）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git status</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看工作区和暂存区的差异</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git diff [file]</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看暂存区vsHEAD的差异</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git diff --cached|--staged [file]</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前工作区和HEAD的差异</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git diff HEAD [file]</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看两次提交/分支的差异</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git diff &lt;commit1&gt; &lt;commit2&gt; [-- &lt;file&gt;]</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在当前目录下搜索字符串str</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git grep &lt;str&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在指定类型文件中搜索</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git grep &lt;str&gt; &lt;-- *.<span class="built_in">type</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在指定提交中搜索</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git grep &lt;str&gt; &lt;commit&gt;</span></span><br><span class="line">ps: git grep和shell命令grep类似，可选参数（-i忽略大小写, -n显示所在行数, -c统计总行数），但是更高效</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示当前分支的提交历史[可以指定显示条数]</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> [-&lt;num&gt;|-n &lt;num&gt;]</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">图形化显示简洁输出（仅短哈希+提交信息）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --graph --oneline</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示提交的简要统计信息，（提交信息+修改的文件名和增删行数）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --<span class="built_in">stat</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示每次提交的详细信息和具体修改信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> -p</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">按作者筛选</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --author=&lt;name&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">基于提交信息查找</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --grep=&lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示特定文件的提交历史</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> -- &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示最近一次提交的详细信息和具体修改信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git show     <span class="comment"># 等同：git log -p -1</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示某次提交修改了那些文件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git show --name-only &lt;commit&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示某次提交时特定文件的修改内容</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git show &lt;commit&gt; &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示某次提交时特定文件的内容</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git show &lt;commit&gt;:&lt;file&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="分支与标签"><a href="#分支与标签" class="headerlink" title="分支与标签"></a>分支与标签</h3><p>branch（分支）是可变、动态的开发线，用于功能开发、协同工作和代码合并，随提交向前移动。<br>tag（标签）是不可变、静态的特定提交快照，用于标记发布版本或里程碑，一旦创建不再改变。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看本地分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看远程分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch -r</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建本地分支（不会切换到新建分支）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch &lt;branch_name&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建本地分支，指向指定commit</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch &lt;branch_name&gt; &lt;commit&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建本地分支，使其跟踪特定的远程分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch --track &lt;local_branch_name&gt; origin/&lt;remote_branch_name&gt;</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout -b &lt;local_branch_name&gt; origin/&lt;remote_branch_name&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除本地分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch -d &lt;branch_name&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重命名分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch -m [old_name] &lt;new_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看本地标签</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git tag</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看远端标签</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git ls-remote --tags origin</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建轻量标签（仅含标签名）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git tag &lt;tag_name&gt; [commit]</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建附录标签（包含信息说明、作者、时间）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git tag -a &lt;tag_name&gt; [commit] -m &lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除标签</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git tag -d &lt;tag_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout &lt;branch&gt;    <span class="comment"># 等同 git switch &lt;branch&gt;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建分支，并切换</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout -b &lt;branch&gt;</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到特定提交或tag（此时HEAD不指向任何分支，而指向该具体提交，如果这时修改并提交，会生成“悬空提交”，需要新建一个分支把它接住）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout &lt;commit|tag&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">丢弃未暂存的修改（即恢复到当前分支最近一次提交）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout -- &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从指定提交或分支恢复文件内容</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout &lt;commit|branch&gt; -- &lt;file&gt;</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交暂存区内容</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit -m &lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交暂存区指定文件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit &lt;file&gt; -m &lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">直接提交工作区修改的内容（仅限已经commit过的文件）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit -a -m &lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改最近一次提交信息</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit --amend -m &lt;message&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并指定分支的提交到当前分支（分叉历史）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git merge &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将当前分支的提交“嫁接”到目标分支的最新提交之后（线性历史）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git rebase &lt;branch&gt;</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">软重置到指定版本（仅动HEAD，工作区修改和暂存区add内容保留）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git reset --soft &lt;commit&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">混合重置到指定版本（移动HEAD，并将暂存区恢复到指定版本，工作区修改不动）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git reset [--mixed] &lt;commit&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">硬重置到指定版本（慎用！！！HEAD指针、暂存区和工作区全部重置到指定版本）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git reset --hard &lt;commit&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">取消特定文件的暂存</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git reset [--mixed] [HEAD] &lt;file&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">撤销特定提交（会新建一个提交，并反向应用撤销commit的修改，相当于两次提交相互抵消）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git revert &lt;commit&gt; [--no-edit]</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到已有分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建并切换到新分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch -c &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到特定提交（游离HEAD，在此基础上开发需新建分支）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch --detach &lt;commit|tag&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>merge</code>和<code>rebase</code>的差别：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如下两个分支</span></span><br><span class="line">A -- B -- C        (main)</span><br><span class="line">       \</span><br><span class="line">        D -- E     (feature)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">merge操作</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout main</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git merge feature</span></span><br><span class="line">A -- B -- C ------------ G   (*main)</span><br><span class="line">       \                /</span><br><span class="line">        D ---- E ------     (feature)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rebase</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout feature</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git rebase main</span></span><br><span class="line">A -- B -- C -- D&#x27; -- E&#x27;      (*feature)</span><br></pre></td></tr></table></figure>
+<p>慎用rebase，可以在本地私人分支上使用，但千万不要在多人合作的分支上使用rebase！</p>
+</blockquote>
+<blockquote>
+<p><code>switch</code>：只管“切分支、建分支、游离HEAD”<br><code>restore</code>：只管“恢复文件内容、丢弃修改”<br><code>checkout</code>：把这俩都混在一起，现在官方推荐使用上面两条新命令，更清晰  </p>
+</blockquote>
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拉取远端所有更新</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git fetch [origin]</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拉取远端指定分支的更新</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git fetch origin &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拉取所有标签</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git fetch --tags</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在当前分支上更新远程同名分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git pull</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在当前分支上更新远程指定分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git pull origin &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">推送当前分支到默认远程分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果当前分支没有设置默认上游分支，需先设置（远端没有会创建）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push &lt;-u|--set-upstream&gt; origin &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">推送当前分支到指定远程分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push origin &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除远端分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push -d origin &lt;branch&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">推送所有标签</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push origin --tags</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">推送所有分支</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push origin --all</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>fetch</code>：只“下载”（origin&#x2F;*），不合并<br><code>pull</code>：“下载”并合并到本地相应分支，等同于fetch+merge</p>
+</blockquote>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">Git常用命令流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-text">新建仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E6%88%96%E6%81%A2%E5%A4%8D%E6%96%87%E4%BB%B6"><span class="toc-text">增加、删除、修改或恢复文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="toc-text">信息查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E4%B8%8E%E6%A0%87%E7%AD%BE"><span class="toc-text">分支与标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5"><span class="toc-text">同步</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../../tags/Git/" rel="tag">Git</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="../../../02/git/Git%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          Git工作原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../../04/09/photography/%E6%96%B0%E6%91%84%E5%BD%B1%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          新摄影笔记
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../04/09/photography/%E6%96%B0%E6%91%84%E5%BD%B1%E7%AC%94%E8%AE%B0/">新摄影笔记</a>
+          </li>
+        
+          <li>
+            <a href="">Git常用命令</a>
+          </li>
+        
+          <li>
+            <a href="../../../02/git/Git%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">Git工作原理</a>
+          </li>
+        
+          <li>
+            <a href="../../../../../2022/07/25/java/%E7%BA%BF%E7%A8%8B/">线程</a>
+          </li>
+        
+          <li>
+            <a href="../../../../../2022/07/25/java/JVM/">JVM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="../../../../../tags/Git/" style="font-size: 20px;">Git</a> <a href="../../../../../tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="../../../../../tags/JVM/" style="font-size: 10px;">JVM</a> <a href="../../../../../tags/Java/" style="font-size: 10px;">Java</a> <a href="../../../../../tags/Linux/" style="font-size: 10px;">Linux</a> <a href="../../../../../tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="../../../../../tags/OS/" style="font-size: 10px;">OS</a> <a href="../../../../../tags/Photography/" style="font-size: 10px;">Photography</a> <a href="../../../../../tags/RegEx/" style="font-size: 10px;">RegEx</a> <a href="../../../../../tags/Thread/" style="font-size: 10px;">Thread</a>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../../archives/2026/">2026年</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../../archives/2022/">2022年</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../../archives/2020/">2020年</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../../archives/2019/">2019年</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Photography/" rel="tag">Photography</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/RegEx/" rel="tag">RegEx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Thread/" rel="tag">Thread</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2026 wangliang0417.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="../../../../../js/jquery-3.4.1.min.js"></script>
+
+
+<script src="../../../../../js/search.json.js"></script>
+
+
+  
+<script src="../../../../../fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="../../../../../js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="../../../../../localshare/js/social-share.js"></script>
+
+    
+<script src="../../../../../localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
